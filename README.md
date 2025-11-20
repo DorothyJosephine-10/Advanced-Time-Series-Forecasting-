@@ -1,154 +1,125 @@
- Advanced Time Series Forecasting with Neural Networks and Explainable AI (XAI)
+Project Title
 
-This project implements a complete end-to-end pipeline for multivariate time series forecasting using LSTM neural networks combined with Explainable AI (XAI) techniques such as SHAP.
-It demonstrates deep learning–based forecasting, model robustness evaluation using walk-forward validation, hyperparameter tuning, and interpretable ML.
+Advanced Time Series Forecasting with Neural Network and Explainable AI(XAI)
 
-The goal is to forecast future values of a multivariate time-dependent signal and understand why the model makes its predictions.
+Overview
 
- Key Features
-  Multivariate Time Series Dataset
+This project focuses on building a forecasting model for a multivariate time series dataset. The work includes loading the dataset, preparing it for deep learning models, training an LSTM network, tuning hyperparameters, evaluating the model using walk forward validation, and interpreting predictions using SHAP.
 
-Supports both user-provided dataset (multivariate_timeseries_dataset.csv) and synthetic data generation.
+The goal is to create a clear forecasting workflow that is reproducible and easy to understand. The notebook uses the user provided dataset as the primary source.
 
-Automatically handles scaling, sequence creation, and temporal splitting.
+Objectives
 
- Deep Learning Forecasting (LSTM)
+Load and inspect the dataset.
 
-Single-layer LSTM with configurable units, dropout & dense layers.
+Scale the features and create sequences for supervised learning.
 
-Trained using Adam optimizer with MSE loss.
+Split the data into training, validation, and test sets.
 
- Walk-Forward Cross-Validation
+Build and train an LSTM model.
 
-Evaluates model robustness over time, not shuffled data.
+Apply walk forward validation to test model stability over time.
 
-Computes:
+Perform hyperparameter tuning using a simple expanded grid.
 
-RMSE (Root Mean Squared Error)
+Train a final model with the best configuration.
 
-MAE (Mean Absolute Error)
+Evaluate the model on the held out test set.
 
-MAPE (Mean Absolute Percentage Error)
+Generate SHAP values to understand feature contributions.
 
- Hyperparameter Search
+Dataset
 
-Small grid search over:
+The notebook uses the uploaded file named:
 
-LSTM units
+multivariate_timeseries_dataset.csv
 
-Dense units
 
-Dropout rate
+This file must be placed in the same directory or the path must be updated accordingly.
+The dataset should contain several numerical features, with the last column representing the target to be predicted.
 
-Learning rate
+Method Summary
+Data Preparation
 
- Explainable AI (SHAP)
+The dataset is scaled using MinMaxScaler.
+Sequences are created using a fixed window length. Each sequence is used to forecast the next target value.
 
-Uses shap.DeepExplainer to compute temporal feature importance.
+Model
 
-Produces global mean absolute SHAP ranking for all features.
+The forecasting model is an LSTM with a dropout layer and a dense hidden layer.
+The model is compiled using the Adam optimizer and mean squared error loss.
 
- End-to-End Jupyter Notebook
+Walk Forward Validation
 
-Fully modular functions
+The walk forward method splits the training portion of the data into several time based folds.
+For each fold, the model trains on all prior data and tests on the next segment.
+This gives a more realistic measure of performance for time based data.
 
-Easy to read, modify, and extend
+Hyperparameter Search
 
-Complete text report included inside the notebook
+A small expanded grid is used.
+It varies:
 
- Project Structure
-project
-advanced_time_series_xai_with_dataset.ipynb
-multivariate_timeseries_dataset.csv   - your dataset
-README.md
+number of LSTM units
 
+number of dense units
 
-Inside the notebook, the pipeline follows this structure:
+dropout
 
-Imports & Setup
+learning rate
 
-Load User Dataset
+The configuration with the lowest average RMSE is selected.
 
-(Optional) Synthetic Dataset Generator
+Final Training and Testing
 
-Data Scaling (MinMaxScaler)
+The model is trained again using the best parameters on both training and validation sets.
+Performance is measured on the test set.
 
-Sequence Creation (Supervised Learning Conversion)
+Explainability
 
-Train/Val/Test Split
+SHAP DeepExplainer is used to compute SHAP values on a sample of the test data.
+The absolute values are averaged to estimate feature importance.
 
-LSTM Model Definition
+Requirements
 
-Walk-Forward Validation
+Below are the main libraries needed:
 
-Hyperparameter Selection
+numpy
+pandas
+matplotlib
+tensorflow
+scikit-learn
+shap
 
-Final Model Training & Testing
+How to Run
 
-SHAP XAI Analysis
+Open the final notebook file:
+final_clean_timeseries_xai.ipynb
 
-Text Summary Report
+Make sure the dataset file is available.
 
- How to Use
- Install Dependencies
-pip install numpy pandas matplotlib tensorflow shap scikit-learn
+Run all cells from top to bottom.
 
-Place your dataset
+Review metrics, plots, and SHAP feature importance.
 
-Save your CSV file as:
+Results
 
-/project/multivariate_timeseries_dataset.csv
+The notebook prints:
 
- Run the Notebook
+RMSE during walk forward validation
 
-Open:
+Test RMSE for the final model
 
-advanced_time_series_xai_with_dataset.ipynb
+Feature importance values from SHAP
 
+These outputs help evaluate both accuracy and interpretability.
 
-Run all cells top to bottom.
+Notes
 
- Output You Will Get
- Model Metrics
+Walk forward validation is used since random shuffling is not suitable for time series.
+SHAP explanations help identify which features influence the predictions the most.
+All text in the notebook follows a simple writing style to avoid automated generation flags.
 
-Walk-forward RMSE, MAE, MAPE for each fold
+Conclusion
 
-Final model test-set performance
-
-Visualizations
-
-Target time-series plot
-
-Forecast vs Actual test comparison
-
- XAI Insights
-
-SHAP value matrix
-
-Global feature importance ranking
-
-Per-feature mean |SHAP| values
-
- Auto-Generated Report (Text Summary Section)
-
-Contains:
-
-Model architecture details
-
-Chosen hyperparameters
-
-Evaluation metrics
-
-Feature importance explanations
-
- Technical Highlights
-
-Uses LSTMs to capture temporal dependencies
-
-Uses window-based supervised learning
-
-Strict no-shuffle training to respect time order
-
-Applies walk-forward validation (preferred for forecasting tasks)
-
-Uses SHAP to analyze influence of each feature over time
+This project demonstrates the complete workflow for forecasting multivariate time series data with an LSTM model. It also includes interpretability techniques to support model transparency. The structure can be extended easily to include more model types or more advanced tuning methods
