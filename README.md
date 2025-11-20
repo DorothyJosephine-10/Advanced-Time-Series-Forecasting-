@@ -1,177 +1,154 @@
-Advanced Time Series Forecasting with Hierarchical Temporal Memory (HTM-Like Model) and LSTM
+📘 Advanced Time Series Forecasting with Neural Networks and Explainable AI (XAI)
 
-This project implements a complete, end-to-end forecasting framework using:
+This project implements a complete end-to-end pipeline for multivariate time series forecasting using LSTM neural networks combined with Explainable AI (XAI) techniques such as SHAP.
+It demonstrates deep learning–based forecasting, model robustness evaluation using walk-forward validation, hyperparameter tuning, and interpretable ML.
 
-A biologically inspired HTM-like Temporal Memory model, using SDR encoding and Hebbian learning
+The goal is to forecast future values of a multivariate time-dependent signal and understand why the model makes its predictions.
 
-A deep learning baseline model (LSTM) for comparison
+🔥 Key Features
+✔ Multivariate Time Series Dataset
 
-Automated generation of:
+Supports both user-provided dataset (multivariate_timeseries_dataset.csv) and synthetic data generation.
 
-A detailed analysis report
+Automatically handles scaling, sequence creation, and temporal splitting.
 
-Forecasting comparison plot (HTM vs LSTM)
+✔ Deep Learning Forecasting (LSTM)
 
-The project satisfies all requirements shown in the assigned task sheet:
+Single-layer LSTM with configurable units, dropout & dense layers.
 
-- Multivariate data generation (≥10,000 samples)
-- HTM model implementation with SDR preprocessing
--Hyperparameter tuning + prediction generation
-- Baseline model for comparison
-- Comparative evaluation (RMSE, MAE, directional accuracy)
-- Written analysis deliverable (Markdown)
-- Output of top critical HTM hyperparameters
+Trained using Adam optimizer with MSE loss.
 
-Project Outputs
+✔ Walk-Forward Cross-Validation
 
-This program automatically generates:
+Evaluates model robustness over time, not shuffled data.
 
-File  Description
-deliverable_2_analysis.md  Full written analysis (HTM architecture, tuning, comparison)
-comparison_plot.png  Plot comparing True vs LSTM vs HTM forecasts
-program_explanation_40000_chars.txt  40k-character detailed program explanation
-Model metrics  RMSE, MAE, directional accuracy for HTM & LSTM
-Project Workflow
-1. Synthetic Multivariate Dataset Generation
-
-The dataset:
-
-Contains 12,000 time steps
-
-Includes three features (x1, x2, x3)
-
-Features:
-
-Trend
-
-Seasonality
-
-Noise
-
-Nonlinear interactions
-
-This simulates real-world complex time series behavior.
-
-2. SDR Encoding (HTM Input Preprocessing)
-
-Each scalar feature is encoded into a Sparse Distributed Representation (SDR):
-
-256 bits per feature
-
-20 active bits
-
-3 features → 768-bit SDR per timestep
-
-Why SDRs?
-
-Noise-robust
-
-High semantic similarity
-
-Matches biological HTM architecture requirements
-
-3. HTM-Like Temporal Memory Model
-
-The HTM-like model includes:
-
-A memory matrix that stores learned patterns
-
-Sparse top-k activation for prediction
-
-Hebbian learning (memory += lr * outer(pred, input))
-
-Online sequence processing
-
-Predictions are decoded from SDR activations
-
-This is a simplified HTM implementation suitable for educational + research purposes.
-
-4. LSTM Baseline Model
-
-A strong deep-learning baseline:
-
-2-layer LSTM
-
-64 hidden units
-
-Sequence length = 20
-
-Parameterized regression → predicts real values directly
-
-Trained using MSE loss + Adam optimizer
-
-This serves as a high-quality benchmark against the HTM model.
-
-5. Evaluation Metrics
-
-The program computes:
+Computes:
 
 RMSE (Root Mean Squared Error)
 
 MAE (Mean Absolute Error)
 
-Directional Accuracy (trend correctness)
+MAPE (Mean Absolute Percentage Error)
 
-6. Deliverable #2 — Auto-Generated Report
+✔ Hyperparameter Search
 
-The script generates a full markdown report:
+Small grid search over:
 
-HTM architecture explanation
+LSTM units
 
-Hyperparameter tuning strategy
+Dense units
 
-LSTM vs HTM comparison
+Dropout rate
 
-Observations and interpretation
+Learning rate
 
-Limitations
+✔ Explainable AI (SHAP)
 
-Recommendations
+Uses shap.DeepExplainer to compute temporal feature importance.
 
-Saved as: deliverable_2_analysis.md
+Produces global mean absolute SHAP ranking for all features.
 
- Project Structure (Recommended)
-.
-├── main.py                          # Main executable program
-├── deliverable_2_analysis.md        # Auto-generated analysis report
-├── comparison_plot.png              # HTM vs LSTM forecast comparison
-├── program_explanation_40000_chars.txt
-├── README.md                        # This file
-└── data/                            # (Optional) generated or real datasets
+✔ End-to-End Jupyter Notebook
 
-⚙️ Installation
-1. Clone the repository
-git clone https://github.com/your-username/HTM_TimeSeries_Forecasting.git
-cd HTM_TimeSeries_Forecasting
+Fully modular functions
 
-2. Create a virtual environment (optional but recommended)
-python -m venv venv
-source venv/bin/activate      # Linux / Mac
-venv\Scripts\activate         # Windows
+Easy to read, modify, and extend
 
-3. Install dependencies
-pip install numpy pandas torch matplotlib scikit-learn
+Complete text report included inside the notebook
 
- Usage
-Run the full pipeline
-python main.py
+📂 Project Structure
+project/
+│── advanced_time_series_xai_with_dataset.ipynb
+│── multivariate_timeseries_dataset.csv   ← your dataset
+│── README.md
 
 
-This will:
+Inside the notebook, the pipeline follows this structure:
 
-Generate the dataset
+Imports & Setup
 
-Train the HTM model
+Load User Dataset
 
-Train the LSTM model
+(Optional) Synthetic Dataset Generator
 
-Evaluate performance
+Data Scaling (MinMaxScaler)
 
-Generate plots
+Sequence Creation (Supervised Learning Conversion)
 
-Create all deliverables automatically
+Train/Val/Test Split
 
-Performance Outputs (Example)
-Model  RMSE  MAE  Direction Accuracy
-HTM-like  ~X.XXXX  ~X.XXXX  ~0.50–0.65
-LSTM  lower RMSE typically  lower MAE  ~0.70–0.90
+LSTM Model Definition
+
+Walk-Forward Validation
+
+Hyperparameter Selection
+
+Final Model Training & Testing
+
+SHAP XAI Analysis
+
+Text Summary Report
+
+📥 How to Use
+1️⃣ Install Dependencies
+pip install numpy pandas matplotlib tensorflow shap scikit-learn
+
+2️⃣ Place your dataset
+
+Save your CSV file as:
+
+/project/multivariate_timeseries_dataset.csv
+
+3️⃣ Run the Notebook
+
+Open:
+
+advanced_time_series_xai_with_dataset.ipynb
+
+
+Run all cells top to bottom.
+
+📊 Output You Will Get
+✔ Model Metrics
+
+Walk-forward RMSE, MAE, MAPE for each fold
+
+Final model test-set performance
+
+✔ Visualizations
+
+Target time-series plot
+
+Forecast vs Actual test comparison
+
+✔ XAI Insights
+
+SHAP value matrix
+
+Global feature importance ranking
+
+Per-feature mean |SHAP| values
+
+✔ Auto-Generated Report (Text Summary Section)
+
+Contains:
+
+Model architecture details
+
+Chosen hyperparameters
+
+Evaluation metrics
+
+Feature importance explanations
+
+🧠 Technical Highlights
+
+Uses LSTMs to capture temporal dependencies
+
+Uses window-based supervised learning
+
+Strict no-shuffle training to respect time order
+
+Applies walk-forward validation (preferred for forecasting tasks)
+
+Uses SHAP to analyze influence of each feature over time
