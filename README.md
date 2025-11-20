@@ -59,7 +59,7 @@ Complete text report included inside the notebook
  Project Structure
 project
 advanced_time_series_xai_with_dataset.ipynb
-multivariate_timeseries_dataset.csv   ← your dataset
+multivariate_timeseries_dataset.csv   - your dataset
 README.md
 
 
